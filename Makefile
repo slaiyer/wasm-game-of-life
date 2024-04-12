@@ -12,3 +12,6 @@ npm-audit-fix:
 
 npm-run-start:
 	npm run start --prefix www
+
+test:
+	wasm-pack test --firefox --headless
