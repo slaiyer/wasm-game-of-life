@@ -6,8 +6,10 @@ const GRID_COLOR = "#000000";
 const DEAD_COLOR = "#000000";
 const ALIVE_COLOR = "#FFFFFF";
 
+let chanceOfLife = +document.getElementById("chance").value / 100;
+
 // Construct the universe, and get its width and height.
-const universe = Universe.new();
+const universe = Universe.new(chanceOfLife);
 const width = universe.width();
 const height = universe.height();
 
@@ -22,7 +24,7 @@ const ctx = canvas.getContext('2d');
 let animationId = null;
 
 const renderLoop = () => {
-    debugger;
+    // debugger;
     universe.tick();
 
     drawGrid();

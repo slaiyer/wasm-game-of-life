@@ -11,6 +11,7 @@ macro_rules! log {
 }
 
 extern crate js_sys;
+use js_sys::Math;
 
 extern crate fixedbitset;
 use fixedbitset::FixedBitSet;
@@ -87,7 +88,7 @@ impl Universe {
         self.cells = next;
     }
 
-    pub fn new() -> Universe {
+    pub fn new(chance_of_life: Option<f64>) -> Universe {
         utils::set_panic_hook();
 
         let width = 256;
@@ -97,7 +98,13 @@ impl Universe {
         let mut cells = FixedBitSet::with_capacity(size);
 
         for idx in 0..width * height {
-            cells.set(idx as usize, js_sys::Math::random() < 0.1);
+            cells.set(
+                idx as usize,
+                match chance_of_life {
+                    Some(chance) => Math::random() < chance,
+                    None => Math::random() < 0.1,
+                },
+            );
         }
 
         log! {

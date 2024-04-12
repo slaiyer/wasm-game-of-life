@@ -28,13 +28,21 @@
       height: 2rem;
       cursor: pointer;
     }
+
+    #chance {
+      background-color: black;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 
 <body>
   <canvas id="game-of-life-canvas"></canvas>
-  <p />
+  <input type="range" id="chance" min="0" max="100" value="4" onchange="window.location.reload()" />
+  <br />
   <button id="play-pause" />
+  <br />
   <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
   <script src="./bootstrap.js"></script>
 </body>
