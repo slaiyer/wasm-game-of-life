@@ -11,4 +11,4 @@ npm-audit-fix:
 	npm audit fix --prefix www
 
 npm-run-start:
-	NODE_OPTIONS=--openssl-legacy-provider npm run start --prefix www
+	npm run start --prefix www
