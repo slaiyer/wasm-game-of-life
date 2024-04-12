@@ -6,7 +6,7 @@
   <title>Game of Life</title>
   <style>
     body {
-      background-color: #000;
+      background-color: black;
       position: absolute;
       top: 0;
       left: 0;
@@ -16,12 +16,24 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #play-pause {
+      background-color: black;
+      color: white;
+      width: 2rem;
+      height: 2rem;
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
   <canvas id="game-of-life-canvas"></canvas>
+  <p />
+  <button id="play-pause" />
   <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
   <script src="./bootstrap.js"></script>
 </body>
