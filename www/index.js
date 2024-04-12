@@ -1,10 +1,10 @@
 import { Universe, Cell } from "wasm-game-of-life";
 import { memory } from "wasm-game-of-life/wasm_game_of_life_bg.wasm";
 
-const CELL_SIZE = 5; // px
-const GRID_COLOR = "#CCCCCC";
-const DEAD_COLOR = "#FFFFFF";
-const ALIVE_COLOR = "#000000";
+const CELL_SIZE = 3; // px
+const GRID_COLOR = "#000000";
+const DEAD_COLOR = "#000000";
+const ALIVE_COLOR = "#FFFFFF";
 
 // Construct the universe, and get its width and height.
 const universe = Universe.new();

@@ -2,6 +2,14 @@ mod utils;
 
 use wasm_bindgen::prelude::*;
 
+extern crate web_sys;
+// A macro to provide `println!(..)`-style syntax for `console.log` logging.
+macro_rules! log {
+    ( $( $t:tt )* ) => {
+        web_sys::console::log_1(&format!( $( $t )* ).into());
+    }
+}
+
 extern crate js_sys;
 
 extern crate fixedbitset;
@@ -88,15 +96,24 @@ impl Universe {
     }
 
     pub fn new() -> Universe {
-        let width = 64;
-        let height = 64;
+        utils::set_panic_hook();
+
+        let width = 256;
+        let height = 256;
 
         let size = (width * height) as usize;
         let mut cells = FixedBitSet::with_capacity(size);
 
         for idx in 0..width * height {
-            cells.set(idx as usize, js_sys::Math::random() < 0.5);
+            cells.set(idx as usize, js_sys::Math::random() < 0.1);
         }
+
+        log! {
+            "Universe created with width: {}, height: {}, alive cells: {}",
+            width,
+            height,
+            cells.count_ones(0..cells.len())
+        };
 
         Universe {
             width,
