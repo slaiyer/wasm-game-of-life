@@ -16,14 +16,6 @@ extern crate fixedbitset;
 use fixedbitset::FixedBitSet;
 
 #[wasm_bindgen]
-#[repr(u8)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum Cell {
-    Dead = 0,
-    Alive = 1,
-}
-
-#[wasm_bindgen]
 #[derive(Default)]
 pub struct Universe {
     width: u32,
@@ -152,5 +144,10 @@ impl Universe {
         let size = (self.width * self.height) as usize;
         self.cells = FixedBitSet::with_capacity(size);
         self.cells.clear();
+    }
+
+    pub fn toggle_cell(&mut self, row: u32, column: u32) {
+        let idx = self.get_index(row, column);
+        self.cells.toggle(idx);
     }
 }
