@@ -1,3 +1,10 @@
+/**
+ * This script file controls the behavior of the game of life simulation.
+ * It imports the `Universe` module from the `wasm-game-of-life` package and sets up the necessary variables and event listeners.
+ * The simulation is rendered on a canvas element with the specified cell size and colors.
+ * The script provides functions for playing, pausing, and resetting the simulation, as well as handling user interactions such as clicking on cells and deploying predefined patterns.
+ * It also includes utility functions for drawing the grid and cells on the canvas.
+ */
 import { Universe } from "wasm-game-of-life";
 import { memory } from "wasm-game-of-life/wasm_game_of_life_bg.wasm";
 
