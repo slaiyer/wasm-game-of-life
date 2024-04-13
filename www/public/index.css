@@ -1,6 +1,5 @@
 * {
     color-scheme: dark !important;
-    background-color: black;
     color: white;
     border: none;
     border-radius: 2px;
@@ -8,6 +7,7 @@
 }
 
 body {
+    background-color: black;
     position: absolute;
     top: 0;
     left: 0;
