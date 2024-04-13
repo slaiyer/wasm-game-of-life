@@ -1,5 +1,13 @@
-body {
+* {
+    color-scheme: dark !important;
     background-color: black;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    font-family: monospace;
+}
+
+body {
     position: absolute;
     top: 0;
     left: 0;
@@ -13,17 +21,21 @@ body {
     overflow: hidden;
 }
 
-#play-pause {
-    background-color: black;
-    border: none;
-    color: white;
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
+#life-canvas {
+    margin: 1rem;
+    cursor: crosshair;
 }
 
 #chance {
-    background-color: black;
-    border: none;
+    margin: 1rem;
+    width: 4rem;
+    text-align: right;
+    cursor: pointer;
+}
+
+#play-pause {
+    margin: 1rem;
+    width: 2rem;
+    height: 2rem;
     cursor: pointer;
 }
