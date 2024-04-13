@@ -13,12 +13,12 @@ const GRID_COLOR = "#000000";
 const DEAD_COLOR = "#000000";
 const ALIVE_COLOR = "#FFFFFF";
 
-let ticksPerFrame = document.getElementById("ticksPerFrame");
+const ticksPerFrame = document.getElementById("ticksPerFrame");
 ticksPerFrame.addEventListener("change", function () {
     localStorage.setItem("ticksPerFrame", ticksPerFrame.value);
 })
 
-let chanceOfLife = document.getElementById("chance");
+const chanceOfLife = document.getElementById("chance");
 chanceOfLife.addEventListener("change", function () {
     localStorage.setItem("chanceOfLife", chanceOfLife.value);
     chanceOfLife.value = (+chanceOfLife.value).toFixed(1);
