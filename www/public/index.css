@@ -23,6 +23,7 @@ body {
 
 #life-canvas {
     margin: 1vh;
+    cursor: crosshair;
 }
 
 #ticksPerFrame {
@@ -33,10 +34,12 @@ body {
     margin: 1vh;
     width: 4rem;
     text-align: right;
+    cursor: pointer;
 }
 
 #play-pause {
     margin: 1vh;
     width: 2rem;
     height: 2rem;
+    cursor: pointer;
 }
