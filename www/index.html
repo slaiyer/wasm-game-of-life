@@ -9,7 +9,7 @@
   <script src="./bootstrap.js" defer="true" fetchpriority="high"></script>
   <script type="text/javascript">
     function limitDecimalPlaces(e, count) {
-      e.target.value = parseFloat(e.target.value).toFixed(count);
+      e.target.value = (+e.target.value).toFixed(count);
     }
   </script>
   <noscript>This page requires WebAssembly and JavaScript execution.</noscript>
@@ -18,8 +18,10 @@
 <body>
   <canvas id="life-canvas">This page requires support for the <code>&lt;canvas&gt;</code> element.</canvas>
   <br />
-  <input type="number" id="chance" min="0" max="100" step="0.1" value="0.0" onload="limitDecimalPlaces(event, 1)"
-    onchange="limitDecimalPlaces(event, 1); window.location.reload()" style="text-align: right;" />
+  <input type="range" id="ticksPerFrame" min="1" max="3" value="1" step="1" />
+  <br />
+  <input type="number" id="chance" min="0" max="100" step="0.1" value="0.0"
+    onchange=" limitDecimalPlaces(event, 1); window.location.reload()" style="text-align: right;" />
   <br />
   <button id="play-pause"></button>
 </body>

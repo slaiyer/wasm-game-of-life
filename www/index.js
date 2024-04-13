@@ -6,7 +6,15 @@ const GRID_COLOR = "#000000";
 const DEAD_COLOR = "#000000";
 const ALIVE_COLOR = "#FFFFFF";
 
+let ticksPerFrame = +document.getElementById("ticksPerFrame").value;
+document.getElementById("ticksPerFrame").addEventListener("change", (event) => {
+    ticksPerFrame = +event.target.value;
+})
+
 let chanceOfLife = +document.getElementById("chance").value / 100;
+document.getElementById("chance").addEventListener("change", (event) => {
+    chanceOfLife = +event.target.value / 100;
+})
 
 // Construct the universe, and get its width and height.
 const universe = Universe.new(chanceOfLife);
@@ -23,32 +31,35 @@ const ctx = canvas.getContext('2d');
 
 let animationId = null;
 
-const renderLoop = () => {
+function renderLoop() {
     // debugger;
-    universe.tick();
+
+    for (let i = 0; i < ticksPerFrame; ++i) {
+        universe.tick();
+    }
 
     drawGrid();
     drawCells();
 
     animationId = requestAnimationFrame(renderLoop);
-};
+}
 
-const isPaused = () => {
+function isPaused() {
     return animationId === null;
-};
+}
 
 const playPauseButton = document.getElementById("play-pause");
 
-const play = () => {
+function play() {
     playPauseButton.textContent = "⏸";
     renderLoop();
-};
+}
 
-const pause = () => {
+function pause() {
     playPauseButton.textContent = "▶";
     cancelAnimationFrame(animationId);
     animationId = null;
-};
+}
 
 playPauseButton.addEventListener("click", event => {
     if (isPaused()) {
@@ -88,7 +99,7 @@ window.addEventListener(
     true,
 );
 
-const drawGrid = () => {
+function drawGrid() {
     ctx.beginPath();
     ctx.strokeStyle = GRID_COLOR;
 
@@ -105,19 +116,19 @@ const drawGrid = () => {
     }
 
     ctx.stroke();
-};
+}
 
-const getIndex = (row, column) => {
+function getIndex(row, column) {
     return row * width + column;
-};
+}
 
-const bitIsSet = (n, arr) => {
+function bitIsSet(n, arr) {
     const byte = Math.floor(n / 8);
     const mask = 1 << (n % 8);
     return (arr[byte] & mask) === mask;
-};
+}
 
-const drawCells = () => {
+function drawCells() {
     const cellsPtr = universe.cells();
     const cells = new Uint8Array(memory.buffer, cellsPtr, width * height / 8);
 
@@ -141,7 +152,7 @@ const drawCells = () => {
     }
 
     ctx.stroke();
-};
+}
 
 canvas.addEventListener('contextmenu', event => {
     event.preventDefault();
