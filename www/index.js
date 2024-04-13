@@ -69,6 +69,15 @@ window.addEventListener(
             case " ":
                 playPauseButton.click();
                 break;
+            case "R":
+                window.location.reload();
+                break;
+            case "C":
+                pause();
+                universe.clear();
+                drawGrid();
+                drawCells();
+                break;
             default:
                 return; // Quit when this doesn't handle the key event.
         }
@@ -172,6 +181,6 @@ canvas.addEventListener(
     true,
 );
 
+pause();
 drawGrid();
 drawCells();
-pause();
