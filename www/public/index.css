@@ -28,13 +28,13 @@ body {
 
 #ticksPerFrame {
     margin: 1vh;
+    cursor: col-resize;
 }
 
 #chance {
     margin: 1vh;
     width: 4rem;
     text-align: right;
-    cursor: pointer;
 }
 
 #play-pause {
