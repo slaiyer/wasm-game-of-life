@@ -22,19 +22,23 @@ body {
 }
 
 #life-canvas {
-    margin: 1rem;
+    margin: 1vh;
     cursor: crosshair;
 }
 
+#ticksPerFrame {
+    margin: 1vh;
+}
+
 #chance {
-    margin: 1rem;
+    margin: 1vh;
     width: 4rem;
     text-align: right;
     cursor: pointer;
 }
 
 #play-pause {
-    margin: 1rem;
+    margin: 1vh;
     width: 2rem;
     height: 2rem;
     cursor: pointer;

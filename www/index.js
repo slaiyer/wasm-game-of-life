@@ -6,18 +6,29 @@ const GRID_COLOR = "#000000";
 const DEAD_COLOR = "#000000";
 const ALIVE_COLOR = "#FFFFFF";
 
-let ticksPerFrame = +document.getElementById("ticksPerFrame").value;
-document.getElementById("ticksPerFrame").addEventListener("change", (event) => {
-    ticksPerFrame = +event.target.value;
+let ticksPerFrame = document.getElementById("ticksPerFrame");
+ticksPerFrame.addEventListener("change", function () {
+    localStorage.setItem("ticksPerFrame", ticksPerFrame.value);
 })
 
-let chanceOfLife = +document.getElementById("chance").value / 100;
-document.getElementById("chance").addEventListener("change", (event) => {
-    chanceOfLife = +event.target.value / 100;
+let chanceOfLife = document.getElementById("chance");
+chanceOfLife.addEventListener("change", function () {
+    localStorage.setItem("chanceOfLife", chanceOfLife.value);
+    chanceOfLife.value = (+chanceOfLife.value).toFixed(1);
+    window.location.reload();
 })
+
+window.onload = function () {
+    pause();
+    chanceOfLife.value = localStorage.getItem("chanceOfLife");
+    chanceOfLife.value = (+chanceOfLife.value).toFixed(1);
+    ticksPerFrame.value = localStorage.getItem("ticksPerFrame");
+}
+
+console.log("Chance of life: ", +chanceOfLife.value);
 
 // Construct the universe, and get its width and height.
-const universe = Universe.new(chanceOfLife);
+const universe = Universe.new(+chanceOfLife.value / 100);
 const width = universe.width();
 const height = universe.height();
 
@@ -34,7 +45,7 @@ let animationId = null;
 function renderLoop() {
     // debugger;
 
-    for (let i = 0; i < ticksPerFrame; ++i) {
+    for (let i = 0; i < +ticksPerFrame.value; ++i) {
         universe.tick();
     }
 
@@ -61,7 +72,7 @@ function pause() {
     animationId = null;
 }
 
-playPauseButton.addEventListener("click", event => {
+playPauseButton.addEventListener("click", function (event) {
     if (isPaused()) {
         play();
     } else {
@@ -71,7 +82,7 @@ playPauseButton.addEventListener("click", event => {
 
 window.addEventListener(
     "keypress",
-    (event) => {
+    function (event) {
         if (event.defaultPrevented) {
             return; // Do nothing if the event was already processed
         }
@@ -154,13 +165,13 @@ function drawCells() {
     ctx.stroke();
 }
 
-canvas.addEventListener('contextmenu', event => {
+canvas.addEventListener('contextmenu', function (event) {
     event.preventDefault();
 });
 
 canvas.addEventListener(
     "mouseup",
-    (event) => {
+    function (event) {
         if (event.defaultPrevented) {
             return; // Do nothing if the event was already processed
         }
