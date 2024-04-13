@@ -174,4 +174,4 @@ canvas.addEventListener(
 
 drawGrid();
 drawCells();
-play();
+pause();
