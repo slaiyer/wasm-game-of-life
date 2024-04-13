@@ -25,6 +25,7 @@ chanceOfLife.addEventListener("change", function () {
     window.location.reload();
 })
 
+// TODO: Fix iOS localStorage issues
 window.onload = function () {
     pause();
     chanceOfLife.value = localStorage.getItem("chanceOfLife");
