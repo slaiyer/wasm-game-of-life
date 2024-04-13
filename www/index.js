@@ -134,23 +134,43 @@ const drawCells = () => {
     ctx.stroke();
 };
 
-canvas.addEventListener("mouseup", event => {
-    const boundingRect = canvas.getBoundingClientRect();
-
-    const scaleX = canvas.width / boundingRect.width;
-    const scaleY = canvas.height / boundingRect.height;
-
-    const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
-    const canvasTop = (event.clientY - boundingRect.top) * scaleY;
-
-    const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
-    const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
-
-    universe.toggle_cell(row, col);
-
-    drawGrid();
-    drawCells();
+canvas.addEventListener('contextmenu', event => {
+    event.preventDefault();
 });
+
+canvas.addEventListener(
+    "mouseup",
+    (event) => {
+        if (event.defaultPrevented) {
+            return; // Do nothing if the event was already processed
+        }
+
+        const boundingRect = canvas.getBoundingClientRect();
+
+        const scaleX = canvas.width / boundingRect.width;
+        const scaleY = canvas.height / boundingRect.height;
+
+        const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
+        const canvasTop = (event.clientY - boundingRect.top) * scaleY;
+
+        const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
+        const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
+
+        if (event.ctrlKey) {
+            universe.deploy('glider', row, col);
+        } else if (event.shiftKey) {
+            universe.deploy('pulsar', row, col);
+        } else {
+            universe.toggle_cell(row, col);
+        }
+
+        drawGrid();
+        drawCells();
+
+        event.preventDefault();
+    },
+    true,
+);
 
 drawGrid();
 drawCells();

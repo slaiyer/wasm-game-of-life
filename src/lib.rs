@@ -1,5 +1,7 @@
 mod utils;
 
+use std::str::FromStr;
+
 use wasm_bindgen::prelude::*;
 
 extern crate web_sys;
@@ -23,6 +25,79 @@ pub struct Universe {
     height: u32,
     cells: FixedBitSet,
 }
+
+enum Pattern {
+    Glider,
+    Pulsar,
+}
+
+impl FromStr for Pattern {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s.to_uppercase().as_str() {
+            "GLIDER" => Ok(Pattern::Glider),
+            "PULSAR" => Ok(Pattern::Pulsar),
+            _ => Err(()),
+        }
+    }
+}
+
+const GLIDER_ALIVE_OFFSET: [(i32, i32); 5] = [(-1, 1), (0, -1), (0, 1), (1, 0), (1, 1)];
+const PULSAR_ALIVE_OFFSET: [(i32, i32); 48] = [
+    // NW
+    (-6, -4),
+    (-6, -3),
+    (-6, -2),
+    (-4, -6),
+    (-3, -6),
+    (-2, -6),
+    (-4, -1),
+    (-3, -1),
+    (-2, -1),
+    (-1, -4),
+    (-1, -3),
+    (-1, -2),
+    // NE
+    (-6, 4),
+    (-6, 3),
+    (-6, 2),
+    (-4, 6),
+    (-3, 6),
+    (-2, 6),
+    (-4, 1),
+    (-3, 1),
+    (-2, 1),
+    (-1, 4),
+    (-1, 3),
+    (-1, 2),
+    // SW
+    (6, -4),
+    (6, -3),
+    (6, -2),
+    (4, -6),
+    (3, -6),
+    (2, -6),
+    (4, -1),
+    (3, -1),
+    (2, -1),
+    (1, -4),
+    (1, -3),
+    (1, -2),
+    // SE
+    (6, 4),
+    (6, 3),
+    (6, 2),
+    (4, 6),
+    (3, 6),
+    (2, 6),
+    (4, 1),
+    (3, 1),
+    (2, 1),
+    (1, 4),
+    (1, 3),
+    (1, 2),
+];
 
 impl Universe {
     fn get_index(&self, row: u32, column: u32) -> usize {
@@ -156,5 +231,29 @@ impl Universe {
     pub fn toggle_cell(&mut self, row: u32, column: u32) {
         let idx = self.get_index(row, column);
         self.cells.toggle(idx);
+    }
+
+    pub fn clear(&mut self) {
+        self.cells.clear();
+    }
+
+    pub fn deploy(&mut self, pattern: &str, row: u32, column: u32) {
+        let pattern = match pattern.parse::<Pattern>() {
+            Ok(pattern) => match pattern {
+                Pattern::Glider => GLIDER_ALIVE_OFFSET.iter(),
+                Pattern::Pulsar => PULSAR_ALIVE_OFFSET.iter(),
+            },
+            Err(_) => return,
+        };
+
+        let alive_cells = pattern
+            .map(|(delta_row, delta_col)| {
+                let row = (row as i32 + delta_row) as u32;
+                let col = (column as i32 + delta_col) as u32;
+                (row % self.height, col % self.width)
+            })
+            .collect::<Vec<_>>();
+
+        self.set_cells(&alive_cells);
     }
 }
